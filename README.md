@@ -118,14 +118,14 @@ For comparison, a minimum example was used with sending a message to the chat an
 
 <a id="init"> </a>
 ## initialization
-`` `CPP
+```CPP
 Fastbot Bot;
 FASTBOT BOT (token);// TOKEN
-`` `
+```
 
 <a id="docs"> </a>
 ## Documentation
-`` `CPP
+```CPP
 // ============== MAYS =======================
 VOID SetToken (String Token);// Change/Set the token bot
 VOID SetChatid (String Chatid);// Installation of ID chat (white list), optional.Can be somewhat after a comma ("ID1, ID2, ID3")
@@ -367,7 +367,7 @@ String fb_64str (int64_t ID);// Translation from int64_t to string
 #define fb_no_urlencode // Disable Urlencode converting for outgoing messages (slightly accelerate the program)
 #define fb_no_ota // Disable OTA support for updates from chat
 #define fb_dynamic // Turn on the dynamic mode: the library executes a query longer, but takes 10 kb less memory in SRAM
-`` `
+```
 
 <a id="usage"> </a>
 ## Usage
@@ -376,18 +376,18 @@ String fb_64str (int64_t ID);// Translation from int64_t to string
 For sending to the chat (messages, stickers, menu, and so on), the chat ID must be indicated to which the shipment will be carried out.You can specify
 A few IDs through a comma, within one line.There are two ways to specify ID:
 - directly to the sending function, they all have such an option (see documentation above)
-`` `CPP
+```CPP
 BOT.SENDMESSAGE ("Hello!", "123456");// in one chat
 BOT.SENDMESSAGE ("Hello!", "123456,7891011");// in two chats
-`` `
+```
 - install the ID through `setChatid ()` and all departments will go to these chat/chats if another ID is not indicated in the sending function
-`` `CPP
+```CPP
 BOT.SETChatid ("123456");// One chat
 //bot.setchatid("123456.7891011 ");// Several chats
 // ...
 BOT.SENDMESSAGE ("HELLO!");// will go to "123456"
 BOT.SENDMESSAGE ("Hello!", "112233");// will go to "112233"
-`` `
+```
 > Note: Telegram divides the text into several messages if the length of the text exceeds ~ 4000 characters!These messages will have different Messageid in the chat.
 
 <a id="inbox"> </a>
@@ -432,7 +432,7 @@ Perhaps it depends on the provider or country.
 
 <a id="EXAMPLE"> </a>
 ## The minimum example
-`` `CPP
+```CPP
 VOID setup () {
   // We connect to wifi
   BOT.ATTACH (NewMSG);// Connect the message processor
@@ -451,7 +451,7 @@ VOID NewMSG (FB_MSG & MSG) {
 VOID loop () {
   BOT.Tick ();
 }
-`` `
+```
 
 <a id="msgid"> </a>
 ##
@@ -479,7 +479,7 @@ To send the menu, a string with buttons and special formatting is used:
 Example menu 3x1: `" menu1 \ t menu2 \ t menu3 \ n menu4 "`
 
 Result:
-`` `CPP
+```CPP
  _______________________
 ||||
 |Menu1 |Menu2 |Menu3 |
@@ -487,33 +487,33 @@ Result:
 ||
 |M e n u 4 |
 | _______________________ |
-`` `
+```
 
 <a id="basic"> </a>
 ## Conventional menu
 Large menu in the lower part of the chat.
-`` `CPP
+```CPP
 ShowMenu ("menu1 \ t menu2 \ t menu3 \ n menu4");
-`` `
+```
 Pressing the button sends the text from the button (the message field `Text`).
 
 <a id="inline"> </a>
 ## Inline menu
 The menu in the message.Requires an input name menu.
-`` `CPP
+```CPP
 Inlinemenu ("Mymenu", "Menu1 \ T Menu2 \ T Menu3 \ N Menu4");
-`` `
+```
 Pressing the button sends the menu name (message `Text`) and text from the button of the message` Data`).
 
 <a id="callb"> </a>
 ## Inline menu with collker
 The menu in the message.Allows you to set each button to a unique text that will be sent by the bot with the name of the menu.
 The list of collves is listed through the decimalYu in the order of the menu buttons:
-`` `CPP
+```CPP
 String menu1 = f ("menu 1 \ t menu 2 \ t menu 3 \ n back");
 String CBACK1 = F ("Action1, Action2, Action3, Back");
 Bot.inlineMenucallback ("Menu 1", Menu1, CBACK1);
-`` `
+```
 Pressing the button sends the menu name (message `Text`) and the specified data (message` data`).
 - (from version 2.11) If Callback is specified as http/https address, the button automatically becomes ** a clip button **
 
@@ -525,18 +525,18 @@ You can answer the collob with the help of:
 - `ANSWER (text, fb_ALERT)` - Warning window and ok button
 
 You need to answer ** inside the message processor **!Example:
-`` `CPP
+```CPP
 VOID NewMSG (FB_MSG & MSG) {
   if (msg.query) Bot.answer ("Hello!", True);
 }
-`` `
+```
 
 > If nothing is answered, the library itself will send an empty answer and the "timer" on the button will disappear.
 
 <a id="unix"> </a>
 ## time module
 The library has a data type `fb_time`, which is a structure with the fields:
-`` `CPP
+```CPP
 uint8_t second;// seconds
 uint8_t minute;// minutes
 Uint8_t Hour;// watch
@@ -544,12 +544,12 @@ uint8_t day;// Day of the month
 uint8_t months;// month
 uint8_t dayweek;// Day of the week (Mon.. SS 1..7)
 uint16_t year;// year
-`` `
+```
 
 When creating the structure, you can specify UNIX time and time zone in hours or minutes (for example, 3 hours or 180 minutes for Moscow (UTC+3: 00),
 330 minutes for India (UTC+5: 30)).After that, you can take the necessary values of time:
 
-`` `CPP
+```CPP
 Fb_time t (1651694501, 3);
 Serial.print (T.Hour);
 Serial.print (':');
@@ -562,27 +562,27 @@ Serial.print (':');
 Serial.print (T.MONTH);
 Serial.print (':');
 Serial.println (t.year);
-`` `
+```
 
 From version 2.9, the library knows how to display a formatted time (string):
-`` `CPP
+```CPP
 Serial.print (t.timestring ());// HF: MM: SS
 Serial.print ('');
 Serial.println (T.Datestestring ());// DD.MM.YYYY
-`` `
+```
 
 <a id="time"> </a>
 ##
 In the processor of incoming messages, the `fb_msg` structure has a` unix` field, it stores the message time in the Unix format.
 For transfer to a more readable format, we act according to the described above scheme:
-`` `CPP
+```CPP
 VOID NewMSG (FB_MSG & MSG) {
   Fb_time t (msg.unix, 3);// transferred unix and time zone
   Serial.print (t.timestring ());
   Serial.print ('');
   Serial.println (T.Datestestring ());
 }
-`` `
+```
 
 <a id="rtc"> </a>
 ## Real Time Watch
@@ -596,11 +596,11 @@ And specify, becauseThe time calculated by ESP means will take (~ 2 seconds per 
 - `fb_time gettime (GMT)` - you need to convey your watch belt, it will return `fb_time`.
 
 Thus, you can get time in two ways (see Timetest example):
-`` `CPP
+```CPP
 Fb_time t = Bot.gettime (3);
 // or
 Fb_time t (Bot.getunix (), 3);
-`` `
+```
 
 <a id="ota"> </a>
 ## Chat firmware update
@@ -619,7 +619,7 @@ From the version of the library 2.13, an update of the firmware "by air" (OTA) t
 - after a successful update, ESP will reboot
 
 ### Examples of scenarios of firmware update
-`` `CPP
+```CPP
 // update if you just sent a bin file
 if (msg.ota) BOT.UPDATE ();
 
@@ -631,13 +631,13 @@ if (msg.ota && msg.filename == "update.bin") Bot.update ();
 
 // update if a famous person has sent (admin)
 if (msg.ota && msg.chatid == "123456") BOT.UPDATE ();
-`` `
+```
 
 ### Examples of SPIFFS update scripts
-`` `CPP
+```CPP
 // update spiffs if you come a file in which there is a word spiffs
 IF (msg.ota && msg.filename.indexof ("spiffs")> 0) BOT.UPDATEFS ();
-`` `
+```
 
 ### compression of the binary
 If the firmware weighs a lot, you can squeeze it to GZIP:
@@ -654,10 +654,10 @@ The library supports the design of the text in messages.The marking of the desig
 - `fb_html` - marking html
 
 Available tags are described in [API Telegram] (https://core.telegram.org/bots/api#formatting-options).For example for Markdown:
-`` `CPP
+```CPP
 Bot.Settextmode (fb_markdown);
 BOT.SENDMESSAGE ("*Bold*, ~ Strike ~,` Code`, [Alexgyver.ru] (https://alexgyver.ru/)));
-`` `
+```
 
 It will bring to the chat: ** bold **, ~~ strike ~~, `code`, [alexgyver.ru] (https://alexgyver.ru/)
 
@@ -682,39 +682,39 @@ The library supports two options for sending files: from the buffer (RAM) and fr
 ### File from a buffer
 To send, you need to transfer the buffer, its size, file type, its size and ID chat (without specifying the chat ID, a chat from Setchatid will be used).
 For editing, you also need to specify the ID messages:
-`` `CPP
+```CPP
 Uint8_t Sendfile (Uint8_t* Buf, Uint32_t Length, FB_FileType Type, Constation String & Name, Constance String & ID);
 Uint8_t Editfile (Uint8_t* Buf, Uint32_T Length, FB_FileType Type, Constation String & Name, Int32_T MSGID, COST String & ID);
-`` `
+```
 
 Send the text in the form of a text file, thus you can conduct and unload logs:
-`` `CPP
+```CPP
   Char Buf [] = "Hello, World!";
   BOT.SENDFILE ((Byte*) BUF, Strlen (BUF), FB_DOC, "TEST.TXT", Chat_ID);
-`` `
+```
 
 We will send a photo from the camera (see example *sendcamphoto *):
-`` `CPP
+```CPP
   Frame = ESP_camera_FB_GET ();
   BOT.SENDFILE ((byte*) frame-> buf, frame-> len, fb_photo, "Photo.jpg", Chat_id);
-`` `
+```
 
 ### File from memory
 Instead of a buffer and its size, the sending function accepts the file, the rest - as when sending from the buffer:
-`` `CPP
+```CPP
 Uint8_t Sendfile (File & File, FB_FileTYPE TYPE, COST String & NAME, COST String & ID);
 uint8_t editfile (File & File, FB_FileTYPE TYPE, COST String & NAME, Int32_T MSGID, COST String & ID);
-`` `
+```
 
 To work with files, you need to connect the library, kkotorI determine the `File` class, for example, spiffs.h or littlefs.h.
 > Connect the library to (above the code) connection Fastbot!Otherwise, functions with File will be inaccessible.
 
 Let's send a picture from memory:
-`` `CPP
+```CPP
   File File = Littlefs.open ("/Test.png", "R");
   BOT.SENDFILE (FILE, FB_PHOTO, "TEST.PNG", Chat_id);
   file.close ();
-`` `
+```
 
 <a d="download"> </a>
 ## download files (v2.20+)
@@ -724,7 +724,7 @@ To download files by Fastbot, you need to connect the library that defines the `
 > Connect the library to (above the code) connection Fastbot!Otherwise, functions with File will be inaccessible.
 
 To download the file you need to open/create a file with the rights for recording and transfer it to `downloadFile ()` along with a link to the file.
-`` `CPP
+```CPP
 VOID NewMSG (FB_MSG & MSG) {
   if (msg.ismfile) {// This is a file
     Serial.print ("downloading");
@@ -736,20 +736,20 @@ VOID NewMSG (FB_MSG & MSG) {
     Serial.println (status? "OK": "error");// Status
   }
 }
-`` `
+```
 
 <a id="tricks"> </a>
 ## Tricks
 ### Reboot
 Messages are noted read at the next (relative to the current message processor) update in Tick (), that is, after at least a tuned timeout.
 If you want to restart ESP on command, then this is the design
-`` `CPP
+```CPP
 VOID Message (FB_MSG & MSG) {
   if (msg.text == "restart") ESP.Restart ();
 }
-`` `
+```
 He will lead to a bootle (endless rebooting), because the message will not be noted read.You can raise the flag by which to go into the reboot, having previously caused Tickmanual:
-`` `CPP
+```CPP
 Bool Res = 0;
 VOID Message (FB_MSG & MSG) {
   if (msg.text == "restart") res = 1;
@@ -760,7 +760,7 @@ VOID loop () {
     ESP.Restart ();
   }
 }
-`` `
+```
 
 ### Pass "missed" messages based on time
 The library has a Skipupdates function that allows you to skip all unread messages.But sometimes it is convenient to navigate in time.
@@ -770,7 +770,7 @@ If you need to ignore the messages sent by the Juzer while the bot was offline (
 - Compare the time of the current message with him.If it is less, ignore the message
 
 An example of passing messages sent before the launch of the controller:
-`` `CPP
+```CPP
 uint32_t Startunix;// Storing time
 
 VOID setup () {
@@ -786,7 +786,7 @@ VOID NewMSG (FB_MSG & MSG) {
   if (msg.unix <startunix) return;// ignore messages
   // ....
 }
-`` `
+```
 
 <a id="versions"> </a>
 ## versions
